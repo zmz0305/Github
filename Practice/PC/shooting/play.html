@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>play</title>
+    <script type="text/javascript" src="phaser.min.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        
+        
+
+        var gameState = function () {
+            
+        };
+        gameState.prototype = {
+            preload: function () {
+                this.game.load.image('background', 'asset/background.jpg');
+                this.game.load.image('dude', 'asset/star.png');
+
+            },
+            create: function () {
+                //var player;
+                var fixed;
+                //var cursors;
+                this.SHOT_DELAY = 100;
+                this.BULLET_SPEED = 500;
+                var NUMBER_OF_BULLETS = 20;
+
+
+                this.game.add.tileSprite(0, 0, 1280, 720, 'background');
+                this.game.world.setBounds(0, 0, 2000, 2000);
+                this.fixed = game.add.sprite(100, 100, 'dude');
+                this.player = game.add.sprite(100, 150, 'dude');
+                this.player.anchor.setTo(0.5, 0.5);
+
+                this.game.physics.startSystem(Phaser.Physics.P2JS);
+                this.fixed.fixedToCamera = true;
+                this.fixed.cameraOffset.x = 250;
+                this.fixed.cameraOffset.y = 250;
+                this.game.physics.p2.enable(this.player);
+                this.cursors = this.game.input.keyboard.createCursorKeys();
+                this.game.camera.follow(this.player);
+                this.bulletPool = this.game.add.group();
+                console.log(NUMBER_OF_BULLETS);
+                for (var i = 0; i < NUMBER_OF_BULLETS; i++)
+                {
+                    var bullet = this.game.add.sprite(this.player.x, this.player.y, 'dude');
+                    this.bulletPool.add(bullet);
+                    bullet.anchor.setTo(0.5, 0.5);
+                    this.game.physics.enable(bullet, Phaser.Physics.ARCADE);
+                    //should have something dead for line91
+                    bullet.kill();
+                    
+                }
+                //this.game.input.activePointer.x = this.game.width / 2;
+                //this.game.input.activePointer.y = this.game.height / 2;
+            },
+            update: function () {
+                //this.player.body.setZeroVelocity();
+
+                this.player.rotation = this.game.physics.arcade.angleToPointer(this.player);
+                if (this.game.input.activePointer.isDown) {
+                    this.shootBullet();
+                    //console.log("pressed");
+                }
+                if (this.cursors.up.isDown) {
+                    this.player.body.moveUp(200)
+                }
+                else if (this.cursors.down.isDown) {
+                    this.player.body.moveDown(200);
+                }
+
+                if (this.cursors.left.isDown) {
+                    this.player.body.moveLeft(200);
+                }
+                else if (this.cursors.right.isDown) {
+                    this.player.body.moveRight(200);
+                }
+            },
+            //render: function () {
+            //    game.debug.cameraInfo(game.camera, 32, 32);
+            //    game.debug.spriteCoords(player, 32, 200);
+            //    game.debug.spriteCoords(fixed, 600, 200);
+            //},
+
+            shootBullet: function () {
+                
+                if (this.lastBulletShotAt === undefined) this.lastBulletShotAt = 0;
+                if (this.game.time.now - this.lastBulletShotAt < this.SHOT_DELAY) return;
+
+                this.lastBulletShotAt = this.game.time.now;
+                var b = this.bulletPool.getFirstDead();
+                //console.log(b);
+                if (b === null || b === undefined) return;
+                console.log("1");
+                b.revive();
+
+                b.checkWorldBounds = true;
+                b.outOfBoundsKill = true;
+
+                b.reset(this.player.x, this.player.y);
+                b.rotation = this.player.rotation;
+                
+                b.body.velocity.x = Math.cos(b.rotation) * this.BULLET_SPEED;
+                b.body.velocity.y = Math.sin(b.rotation) * this.BULLET_SPEED;
+            }
+        };
+        var game = new Phaser.Game(800, 600, Phaser.CANVAS, '');
+        game.state.add('game', gameState, true);
+    </script>
+</body>
+</html>

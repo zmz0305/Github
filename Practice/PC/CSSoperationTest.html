@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script type="text/javascript">
+        function changeHead()
+        {
+            colorIndex = document.form1.head.selectedIndex;
+            color = document.form1.head.options[colorIndex].value;
+            document.getElementById("head1").style.color = color;
+        }
+        function changeBody()
+        {
+            colorIndex = document.form1.body.selectedIndex;
+            color = document.form1.body.options[colorIndex].value;
+            document.getElementById("body1").style.color = color;
+        }
+    </script>
+</head>
+
+<body>
+    <h1 id="head1">This is the head</h1>
+    <h2 id="body1">This is the body</h2>
+    <form name="form1">
+        <h1>heading color</h1>
+        <select name="head" onChange="changeHead()">
+            <option value="black">Black</option>
+            <option value="green">Green</option>
+            <option value="red">Red</option>
+        </select>
+        <h1>body color</h1>
+        <select name="body" onchange="changeBody()">
+            <option value="black">Black</option>
+            <option value="green">Green</option>
+            <option value="red">Red</option>
+        </select>
+
+    </form>
+
+</body>
+</html>

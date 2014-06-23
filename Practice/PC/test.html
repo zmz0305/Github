@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="prototype.js"></script>
+    <script type="text/javascript" src="effects.js"></script>
+    <script type="text/javascript" src="test.js"></script>
+    <script type="text/javascript">
+        function haha()
+        {
+            alert("this is bullshit");
+        }
+        //document.onmousedown = haha;
+    </script>
+    <title>
+        all kinds of testing shit
+    </title>
+</head>
+<body onkeypress="displayKey(event);">
+    <div style="background-color:#b6ff00; padding:20px;" id="test" >
+        <h2>hahaha</h2>
+        <p id="keys"></p>
+    </div>
+    <canvas width="500px" height="500px" id="c" style="border-style:solid; border-color:#b6ff00 #ff0000 #ffd800; border-width:2px; "></canvas>
+
+
+    <input type="button" value="testFadeOut" onclick="new Effect.Fade($('test'))" />
+    <input type="button" value="testFadeIn" onclick="new Effect.Appear($('test'))" />
+    <input type="button" value="testSlideUp" onclick="new Effect.SlideUp($('test'))" />
+    <input type="button" value="testSlideDown" onclick="new Effect.SlideDown($('test'))" />
+    <input type="button" value="testHighLight" onclick="new Effect.Highlight($('test'))" />
+    <input type="button" value="testShake" onclick="new Effect.Shake($('test'))" />
+
+    <canvas width="200px" height="400px" id="myCanvas" style="border-style:solid; border-color:#b6ff00 #ff0000 #ffd800; border-width:2px; "></canvas>
+    <script type="text/javascript">
+        function draw1()
+        {
+            var canvas=document.getElementById("c");
+            var context=canvas.getContext("2d");
+            context.canvas.addEventListener('click', function (event) {
+                mouseX = event.clientX - context.canvas.offsetLeft;
+                mouseY = event.clientY - context.canvas.offsetTop;
+                context.fillStyle = "#0";
+                context.fillText("adsf", 200, 200, 100);
+                //alert(Math.floor(mouseX/10),Math.floor(mouseY/10),game.map[Math.floor(mouseX/10)][Math.floor(mouseY/10)]);
+            })
+            
+        }
+        draw1();
+    </script>
+</body>
+</html>
