@@ -4,11 +4,11 @@
   "description": "using colors module",
   "main": "foo.js",
   "dependencies": {
-    "colors": "~0.6.0-1"
+    "colors": "^0.6.2"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"no test specified\" && exit 1"
+    "test": "foo.js"
   },
   "repository": "github@github.com/zmz0305/",
   "keywords": [
